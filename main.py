@@ -1,11 +1,26 @@
+from jogador import Jogador
+from baralho import Baralho
 
+def obter_jogadores():
+    print("Digite o número de jogadores (2 ou 4): ")
+    numero_jogadores = int(input())
+    while numero_jogadores not in [2, 4]:
+        print("O número de jogadores deve ser 2 ou 4! Digite novamente: ")
+        numero_jogadores = int(input())
+
+    lista_de_jogadores = list()
+    for i in range(numero_jogadores):
+        print("Escolha o nome do jogador "+str(i)+": ")
+        nome_do_jogador = input()
+        lista_de_jogadores.append(Jogador(nome_do_jogador))
+    return lista_de_jogadores
 
 if __name__ == '__main__':
-    numero_jogadores = input()
-    jogadores = obter_jogadores(numero_jogadores)
-    while True:
+    jogadores = obter_jogadores()
+
+    '''while True:
         baralho = Baralho()
-        baralho.embaralhar()
+        baralho.remover_cartas_inutilizaveis()
 
         pontuacao = TabelaDePontosJogo()
 
@@ -36,4 +51,4 @@ if __name__ == '__main__':
             print("Os jogadores X e Y ganharam!")
             break
 
-
+        baralho.embaralhar()'''
