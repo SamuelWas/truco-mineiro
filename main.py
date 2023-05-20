@@ -42,7 +42,7 @@ def rodar_vez(jogadores, vencedor_da_rodada):
 
 def obter_ordem_truco_mineiro():
     manilhas = ['7♦', 'A♠', '7♥', '4♣']
-    valores = ['7', '6', '5', '4', 'J', 'Q', 'K', 'A', '2', '3']
+    valores = ['4', '5', '6', '7', 'J', 'Q', 'K', 'A', '2', '3']
     naipes= ['♦', '♠', '♥', '♣']
     
     score = 1
@@ -52,11 +52,11 @@ def obter_ordem_truco_mineiro():
             carta = valor + naipe
             if carta not in manilhas: 
                 dict_pontos_cartas[carta] = score
-        score = score + 1
+        score += 1
 
     for manilha in manilhas:
         dict_pontos_cartas[manilha] = score
-        score = score + 1
+        score += 1
 
     return dict_pontos_cartas
 
@@ -80,11 +80,6 @@ def main():
             jogador.receber_cartas(mao)
 
         rodadas = 3
-        time_vencedor_mao = 0
-        truco = False
-        seis = False
-        nove = False
-        doze = False
         while rodadas > 0:        
             pontos_da_mao = {}
             pontos_da_mao['1'] = 0
