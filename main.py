@@ -1,6 +1,7 @@
 from jogador import Jogador
 from baralho import Baralho
 from tabela_de_pontos import TabelaDePontos
+from constantes import manilhas, valores, naipes
 
 def calcular_id_time_do_jogador(id_jogador):
     return str(2 - (id_jogador % 2))
@@ -56,9 +57,6 @@ def rodar_vez(jogadores, vencedor_da_rodada):
     return jogadores
 
 def obter_ordem_truco_mineiro():
-    manilhas = ['7♦', 'A♠', '7♥', '4♣']
-    valores = ['4', '5', '6', '7', 'J', 'Q', 'K', 'A', '2', '3']
-    naipes= ['♦', '♠', '♥', '♣']
     
     score = 1
     dict_pontos_cartas = {}

@@ -2,29 +2,8 @@ from enum import Enum
 from dataclasses import dataclass
 from typing import List
 import random
+from constantes import carta_valores, carta_naipes
 
-carta_valores=[
-    'A',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    'J',
-    'Q',
-    'K'
-]
-
-carta_naipes=[
-   '♦',
-   '♠',
-   '♥',
-   '♣'
-]
 
 @dataclass(frozen=True)
 class Carta:
@@ -38,7 +17,6 @@ class Carta:
         return self.valor + self.naipe
 
     
-
 class Baralho:
     """ Classe que define um baralho de cartas. """
     def __init__(self):
