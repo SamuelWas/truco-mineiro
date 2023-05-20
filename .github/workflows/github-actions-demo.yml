@@ -38,3 +38,12 @@ jobs:
       with:
         name: test-results
         path: ./test-results
+
+    - name: Extract coverage percentage
+      id: coverage
+      run: |
+        coverage_percentage=$(grep -oP "(?<=<span class='pc_cov'>)[\d\.]+" htmlcov/index.html | awk '{print $1}')
+        echo "COVERAGE_PERCENTAGE=${coverage_percentage}" >> $GITHUB_ENV
+
+    - name: Replace coverage badge
+      run: sed -i "s/X/${{ env.COVERAGE_PERCENTAGE }}/" README.md
