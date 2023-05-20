@@ -1,5 +1,5 @@
 # Truco Mineiro
-<!-- COVERAGE_BADGE -->
+![Coverage](https://img.shields.io/badge/coverage-66%25-green)
 
 Este é um programa simples em Python que implementa o jogo de cartas Truco Mineiro. O Truco Mineiro é uma variação do jogo de truco muito popular no estado de Minas Gerais, Brasil.
 
