@@ -19,16 +19,14 @@ def obter_jogadores():
 
 def calcular_vencedor(pilha_de_cartas, dict_pontos_cartas):
     maior_valor = 0
-    id_maior_valor = 0
+    id_jogador_vencedor = 0
     for carta, id_jogador in pilha_de_cartas:
         valor_carta = dict_pontos_cartas[str(carta)]
         if valor_carta > maior_valor:
             maior_valor = valor_carta
-            id_maior_valor = id_jogador
+            id_jogador_vencedor = id_jogador
             maior_carta = carta
-            id_jogador_maior_carta = id_jogador
-    print("Maior carta da pilha: " + str(maior_carta) +  " do jogador " + str(id_jogador_maior_carta))
-    return id_maior_valor
+    return (maior_carta, id_jogador_vencedor)
 
 def rodar_vez(jogadores, vencedor_da_rodada):
     i = 0
@@ -65,7 +63,7 @@ def obter_ordem_truco_mineiro():
 def calcular_id_time_do_jogador(id_jogador):
     return str(2 - (id_jogador % 2))
 
-if __name__ == '__main__':
+def main():
     dict_pontos_cartas = obter_ordem_truco_mineiro()
     jogadores = obter_jogadores()
 
@@ -98,8 +96,9 @@ if __name__ == '__main__':
                 # print(carta) DEBUG
                 pilha_de_cartas.append((carta, jogador.id_jogador))       
 
-            vencedor_da_rodada = calcular_vencedor(pilha_de_cartas, dict_pontos_cartas)
-
+            maior_carta, vencedor_da_rodada = calcular_vencedor(pilha_de_cartas, dict_pontos_cartas)
+            print("Maior carta da pilha: " + str(maior_carta) +  " do jogador " + str(vencedor_da_rodada))
+            
             jogadores = rodar_vez(jogadores, vencedor_da_rodada)
 
             time_vencedor = calcular_id_time_do_jogador(vencedor_da_rodada)
@@ -115,3 +114,7 @@ if __name__ == '__main__':
             break
 
         baralho.embaralhar()
+
+
+if __name__ == '__main__':
+    main()
