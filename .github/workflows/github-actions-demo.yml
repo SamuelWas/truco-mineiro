@@ -42,9 +42,9 @@ jobs:
     - name: Extract coverage percentage
       id: coverage
       run: |
-        coverage_percentage=$(grep -oP "(?<=<span class='pc_cov'>)[\d\.]+" htmlcov/index.html | awk '{print $1}')
+        coverage_percentage=$(grep -oP '(?<=<span class="pc_cov">)[0-9.]+' htmlcov/index.html | awk '{print $1}')
         echo "COVERAGE_PERCENTAGE=${coverage_percentage}" >> $GITHUB_ENV
-        
+
     - name: Debug
       run: echo "COVERAGE_PERCENTAGE=${{ env.COVERAGE_PERCENTAGE }}"
 
