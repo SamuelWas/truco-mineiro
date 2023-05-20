@@ -58,4 +58,7 @@ class Baralho:
     
     def virar(self):
         """ Retira a carta do topo e remove do baralho. """
+        if(len(self.cartas)) == 0:
+            raise Exception("Baralho vazio")
+            
         return self.cartas.pop()
