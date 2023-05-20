@@ -45,12 +45,5 @@ jobs:
         coverage_percentage=$(grep -oP '(?<=<span class="pc_cov">)[0-9.]+' htmlcov/index.html | awk '{print $1}')
         echo "COVERAGE_PERCENTAGE=${coverage_percentage}" >> $GITHUB_ENV
 
-    - name: Debug
-      run: echo "COVERAGE_PERCENTAGE=${{ env.COVERAGE_PERCENTAGE }}"
-
     - name: Replace coverage badge
-      run: sed -i "s/<!-- COVERAGE_BADGE -->/![Coverage](https://img.shields.io/badge/coverage-${{ env.COVERAGE_PERCENTAGE }}%25-green)/" README.md
-
-    - name: Debug
-      run: cat README.md
-
+      run: sed -i 's/<!-- COVERAGE_BADGE -->/![Coverage](https:\/\/img.shields.io\/badge\/coverage-${{ env.COVERAGE_PERCENTAGE }}%25-green)/g' README.md
