@@ -49,7 +49,7 @@ jobs:
       run: echo "COVERAGE_PERCENTAGE=${{ env.COVERAGE_PERCENTAGE }}"
 
     - name: Replace coverage badge
-      run: sed -i "s/X/${{ env.COVERAGE_PERCENTAGE }}/" README.md
+      run: sed -i "s/X/22/" README.md
 
     - name: Debug
       run: cat README.md
