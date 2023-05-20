@@ -5,6 +5,9 @@ class Jogador:
         self.id_time = id_time
         self.cartas = []
 
+    def __eq__(self, other):
+        return self.nome == other.nome and self.id_jogador == other.id_jogador and self.id_time == other.id_time
+
     def receber_cartas(self, cartas):
         self.cartas = cartas
 
