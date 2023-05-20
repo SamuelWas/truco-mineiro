@@ -2,6 +2,9 @@ from jogador import Jogador
 from baralho import Baralho
 from tabela_de_pontos import TabelaDePontos
 
+def calcular_id_time_do_jogador(id_jogador):
+    return str(2 - (id_jogador % 2))
+
 def obter_jogadores():
     print("Digite o número de jogadores (2 ou 4): ")
     numero_jogadores = int(input())
@@ -19,14 +22,26 @@ def obter_jogadores():
 
 def calcular_vencedor(pilha_de_cartas, dict_pontos_cartas):
     maior_valor = 0
-    id_jogador_vencedor = 0
+    vencedores = []
     for carta, id_jogador in pilha_de_cartas:
         valor_carta = dict_pontos_cartas[str(carta)]
         if valor_carta > maior_valor:
+            vencedores = []
             maior_valor = valor_carta
-            id_jogador_vencedor = id_jogador
-            maior_carta = carta
-    return (maior_carta, id_jogador_vencedor)
+            vencedores.append((carta, id_jogador))
+        elif valor_carta == maior_valor:
+            vencedores.append((carta, id_jogador))
+    
+    if len(vencedores) == 1:
+        return vencedores.pop()
+    
+    time_vencedor = calcular_id_time_do_jogador(vencedores[0][1])
+    for carta,id_jogador in vencedores:
+        if time_vencedor != calcular_id_time_do_jogador(id_jogador):
+            return ('-' ,0)
+        
+    return vencedores.pop()
+    
 
 def rodar_vez(jogadores, vencedor_da_rodada):
     i = 0
@@ -60,9 +75,6 @@ def obter_ordem_truco_mineiro():
 
     return dict_pontos_cartas
 
-def calcular_id_time_do_jogador(id_jogador):
-    return str(2 - (id_jogador % 2))
-
 def main():
     dict_pontos_cartas = obter_ordem_truco_mineiro()
     jogadores = obter_jogadores()
@@ -92,7 +104,10 @@ def main():
                 pilha_de_cartas.append((carta, jogador.id_jogador))       
 
             maior_carta, vencedor_da_rodada = calcular_vencedor(pilha_de_cartas, dict_pontos_cartas)
-            print("Maior carta da pilha: " + str(maior_carta) +  " do jogador " + str(vencedor_da_rodada))
+            if vencedor_da_rodada == 0:
+                print("Empate!")
+            else:
+                print("Maior carta da pilha: " + str(maior_carta) +  " do jogador " + str(vencedor_da_rodada))
             
             jogadores = rodar_vez(jogadores, vencedor_da_rodada)
 

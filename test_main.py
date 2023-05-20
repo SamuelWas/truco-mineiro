@@ -65,6 +65,6 @@ class MainTest(unittest.TestCase):
         dict_pontos_cartas=main.obter_ordem_truco_mineiro()
 
         pilha_de_cartas=[('Q♦', 1), ('Q♥', 2), ('Q♣', 3)]
-        expected_result=('Q♦', 1)
+        expected_result=('-', 0)
         self.assertEqual(main.calcular_vencedor(
             pilha_de_cartas, dict_pontos_cartas), expected_result)
