@@ -50,7 +50,7 @@ jobs:
 
     - name: Replace coverage badge
       run: |
-        sed -i "s/X/22/" README.md
+        sed -i "s/X/${{ env.COVERAGE_PERCENTAGE }}/" README.md
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config user.name "github-actions[bot]"
         git commit -am "Automated report"
