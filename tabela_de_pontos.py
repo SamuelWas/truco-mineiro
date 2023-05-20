@@ -12,7 +12,7 @@ class TabelaDePontos:
           return
 
       def aumentar_multiplicador(self):
-          multiplicador += 2
+          self.multiplicador += 2
           return
       
       def is_termino(self):
