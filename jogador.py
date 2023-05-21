@@ -29,3 +29,6 @@ class Jogador:
         jogada = int(input("Qual carta deseja Jogar? ")) - 1  # 1, 2 ou 3 por enquanto
         return self.cartas.pop(jogada)
     
+    def limpar_mao(self):
+        self.cartas.clear()
+    

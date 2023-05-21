@@ -20,6 +20,7 @@ class TabelaDePontos:
             return 1
           if self.pontos_t2 >= 12:
             return 2
+          return 0
           
       def limpar_estado_de_jogo(self):
           self.multiplicador = 2
