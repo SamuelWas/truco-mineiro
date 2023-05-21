@@ -14,15 +14,18 @@ class Jogador:
     def __repr__(self):
         return self.nome
 
-    def receber_cartas(self, cartas):
-        self.cartas = cartas
+    def receber_carta(self, carta):
+        self.cartas.append(carta)
 
     def converter_mao_em_string(self):
         return ','.join(map(str, self.cartas))
 
-    def realizar_jogada(self):
+    def mostrar_mao(self):
         print(f"Sua mão {self.nome}:")
         print(self.converter_mao_em_string())
-        jogada = int(input("Qual jogada deseja realizar? ")) - 1  # 1, 2 ou 3 por enquanto
+   
+    def realizar_jogada(self):
+        self.mostrar_mao()
+        jogada = int(input("Qual carta deseja Jogar? ")) - 1  # 1, 2 ou 3 por enquanto
         return self.cartas.pop(jogada)
     

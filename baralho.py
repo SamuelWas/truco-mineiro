@@ -21,6 +21,7 @@ class Baralho:
     """ Classe que define um baralho de cartas. """
     def __init__(self):
         self.cartas = self.novodeque()
+        self.remover_cartas_inutilizaveis()
 
     def novodeque(self):
         """ Método de geração das cartas de forma ordenada. """
