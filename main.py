@@ -18,7 +18,7 @@ class Jogo():
         self.rodada = 0
         self.estado_jogo = 0
 
-    def _limpar_cmd():
+    def _limpar_cmd(self):
         sistema_operacional = platform.system()
         if sistema_operacional == 'Windows':
             os.system('cls')
@@ -171,7 +171,7 @@ class Jogo():
                     carta = jogador.realizar_jogada()
                     self.adicionar_jogada_a_pilha(carta, jogador.id_jogador)
         
-        return self._calcular_vencedor()     
+        return self._calcular_vencedor()       
 
 
 def main():
