@@ -25,10 +25,3 @@ class TabelaDePontos:
       def limpar_estado_de_jogo(self):
           self.multiplicador = 2
         
-      '''def alterar_estado_de_jogo(self):
-          print("Você gostaria de adicionar dois pontos para o vencedor dessa rodada? (S para sim, N para não)")
-          resposta = input()
-
-          if resposta == 'S':
-              
-          elif resposta == 'N':'''

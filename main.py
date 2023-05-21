@@ -16,7 +16,6 @@ class Jogo():
         self.pilha_de_cartas = []
         self.dict_pontos_cartas = self.obter_ordem_truco_mineiro()
         self.rodada = 0
-        self.estado_jogo = 0
         self.terminar_rodada = False
 
     def _limpar_cmd(self):
@@ -93,7 +92,6 @@ class Jogo():
         return vencedores.pop()[1]
     
     def _resetar_estado_jogo(self):
-        self.estado_jogo = 0
         for jogador in self.jogadores:
             jogador.limpar_mao()
     
@@ -111,6 +109,17 @@ class Jogo():
                 carta = self.baralho.virar()
                 jogador.receber_carta(carta)
 
+    def controlar_partida(self):
+        while True:
+            id_vencedor = self.controlar_fluxo_partida()
+            id_time_vencedor = int(self.calcular_id_time_do_jogador(id_vencedor))
+            print("Time "+str(id_time_vencedor)+" venceu a mão!")
+            print(str(self.tabela_pontos.multiplicador)+" pontos para o time "+str(id_time_vencedor))
+            self.tabela_pontos.pontuar(id_time_vencedor)
+            self.tabela_pontos.limpar_estado_de_jogo()
+            if self.tabela_pontos.is_termino():
+                return self.tabela_pontos.is_termino()
+
     def controlar_fluxo_partida(self):
         self.terminar_rodada = False
         self._resetar_estado_jogo()
@@ -120,7 +129,7 @@ class Jogo():
         vencedor_rodada = self.nova_rodada()
 
         if self.terminar_rodada:
-            return (vencedor_rodada, self.estado_jogo)
+            return vencedor_rodada
         
         if vencedor_rodada != 0:
             #Se não empatou, comece uma nova rodada.
@@ -129,27 +138,27 @@ class Jogo():
             
             #Caso a nova rodada empatar, vence quem ganhou a primeira
             if vencedor_nova_rodada == 0:
-                return  (vencedor_partidas[0], self.estado_jogo)
+                return  vencedor_partidas[0]
             
             elif vencedor_nova_rodada == vencedor_rodada:
-                return (vencedor_rodada, self.estado_jogo)
+                return vencedor_rodada
             
             #Caso não empatar, joguemos a terceira rodada. Como cada um ganhou uma rodada, ganha quem ganhar a terceira
             else:
                 vencedor_terceira_rodada = self.nova_rodada()
-                return (vencedor_terceira_rodada, self.estado_jogo)
+                return vencedor_terceira_rodada
         
         
         #Caso tenha empatado
         else:
             vencedor_rodada_empatada = self.nova_rodada()
             if vencedor_rodada_empatada != 0:
-                return (vencedor_rodada_empatada, self.estado_jogo)
+                return vencedor_rodada_empatada
             
             #Caso empate novamente
             else:
                 vencedor_nova_rodada_empatada = self.nova_rodada()
-                return (vencedor_nova_rodada_empatada, self.estado_jogo)
+                return vencedor_nova_rodada_empatada
                 
 
     def nova_rodada(self):
@@ -167,7 +176,7 @@ class Jogo():
                 
                 if aceitou == 'A':
                     self._limpar_cmd()
-                    self.estado_jogo += 1
+                    self.tabela_pontos.aumentar_multiplicador()
                     carta = jogador.realizar_jogada()
                     self.adicionar_jogada_a_pilha(carta, jogador.id_jogador)
                 
@@ -177,7 +186,8 @@ class Jogo():
                     return vencedor_rodada
                 
                 else:
-                    self.estado_jogo += 2
+                    self.tabela_pontos.aumentar_multiplicador()
+                    self.tabela_pontos.aumentar_multiplicador()
                     carta = jogador.realizar_jogada()
                     self.adicionar_jogada_a_pilha(carta, jogador.id_jogador)
         
@@ -188,19 +198,8 @@ def main():
     num_jogadores = int(input("Numero de jogadores (2 ou 4): "))
     jogo = Jogo(num_jogadores)
     jogo.obter_jogadores(num_jogadores)
-    tabela_pontos = TabelaDePontos()
-    while True:
-        id_vencedor, estado_jogo = jogo.controlar_fluxo_partida()
-        id_time_vencedor = int(jogo.calcular_id_time_do_jogador(id_vencedor))
-        print("Jogador "+str(id_vencedor)+" venceu a rodada!")
-        print(str(estado_jogo*2 + 2)+" pontos para o time "+str(id_time_vencedor))
-        for idx in range(estado_jogo):
-            tabela_pontos.aumentar_multiplicador()
-        tabela_pontos.pontuar(id_time_vencedor)
-        tabela_pontos.limpar_estado_de_jogo()
-        if tabela_pontos.is_termino():
-            time_ganhador = tabela_pontos.is_termino()
-            break
+    jogo._limpar_cmd()
+    time_ganhador = jogo.controlar_partida()
     print("O time "+str(time_ganhador)+" venceu!")
 
 if __name__ == '__main__':
