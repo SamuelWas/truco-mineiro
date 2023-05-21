@@ -1,5 +1,6 @@
 from jogador import Jogador
 from baralho import Baralho
+from truco import Truco
 from tabela_de_pontos import TabelaDePontos
 from constantes import manilhas, valores, naipes
 import os
@@ -14,7 +15,7 @@ class Jogo():
         self.baralho = Baralho()
         self.tabela_pontos = TabelaDePontos()
         self.pilha_de_cartas = []
-        self.dict_pontos_cartas = self.obter_ordem_truco_mineiro()
+        self.dict_pontos_cartas = Truco().obter_ordem_truco_mineiro()
         self.rodada = 0
         self.terminar_rodada = False
 
@@ -36,21 +37,6 @@ class Jogo():
     
     def calcular_id_time_do_jogador(self , id_jogador):
         return str(2 - (id_jogador % 2))
-    
-    def obter_ordem_truco_mineiro(self):
-        score = 1
-        dict_pontos_cartas = {}
-        for valor in valores:
-            for naipe in naipes:
-                carta = valor + naipe
-                if carta not in manilhas: 
-                    dict_pontos_cartas[carta] = score
-            score += 1
-
-        for manilha in manilhas:
-            dict_pontos_cartas[manilha] = score
-            score += 1
-        return dict_pontos_cartas 
 
     def limpar_pilha_cartas(self):
         self.pilha_de_cartas.clear()
@@ -61,35 +47,6 @@ class Jogo():
     def _resetar_baralho(self):
         self.baralho = Baralho()
         print('Embaralhando as cartas...')
-    
-    def rodar_vez(self):
-        idx = 0
-        eixo_de_rotacao = 0
-        for jogador in self.jogadores:
-            if jogador.id_jogador == self.vencedor_da_rodada:
-                eixo_de_rotacao = idx
-            idx += 1
-        self.jogadores = self.jogadores[eixo_de_rotacao:] + self.jogadores[:eixo_de_rotacao]
-
-    def _calcular_vencedor(self):
-        maior_valor = 0
-        vencedores = []
-        for carta, id_jogador in self.pilha_de_cartas:
-            valor_carta = self.dict_pontos_cartas[str(carta)]
-            if valor_carta > maior_valor:
-                vencedores = []
-                maior_valor = valor_carta
-                vencedores.append((carta, id_jogador))
-            elif valor_carta == maior_valor:
-                vencedores.append((carta, id_jogador))
-        
-        if len(vencedores) == 1:
-            return vencedores.pop()[1]
-        time_vencedor = self.calcular_id_time_do_jogador(vencedores[0][1])
-        for carta,id_jogador in vencedores:
-            if time_vencedor != self.calcular_id_time_do_jogador(id_jogador):
-                return 0
-        return vencedores.pop()[1]
     
     def _resetar_estado_jogo(self):
         for jogador in self.jogadores:
@@ -191,7 +148,7 @@ class Jogo():
                     carta = jogador.realizar_jogada()
                     self.adicionar_jogada_a_pilha(carta, jogador.id_jogador)
         
-        return self._calcular_vencedor()       
+        return Truco().calcular_vencedor(self.pilha_de_cartas, self.dict_pontos_cartas)     
 
 
 def main():
