@@ -1,4 +1,4 @@
 [run]
 branch = True
 source = ./
-omit = ./test*.py
+omit = ./tests/*.py
