@@ -1,3 +1,5 @@
+from carta import Carta
+
 class Jogador:
     def __init__(self, nome, id_jogador, id_time):
         self.nome = nome
@@ -15,6 +17,12 @@ class Jogador:
         return self.nome
 
     def receber_carta(self, carta):
+        if(len(self.cartas) >= 3):
+            raise Exception("Jogador não pode receber mais cartas")
+        
+        if carta in self.cartas:
+            raise Exception("Jogador já possui essa carta")
+        
         self.cartas.append(carta)
 
     def converter_mao_em_string(self):

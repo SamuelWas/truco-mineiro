@@ -1,6 +1,5 @@
 import unittest
 from unittest.mock import patch
-from jogador import Jogador
 from jogo import Jogo
 
 class TestJogo(unittest.TestCase):
@@ -8,17 +7,21 @@ class TestJogo(unittest.TestCase):
     def setUp(self):
         self.jogo = Jogo(4)
 
-    #def test_obter_len_jogadores(self):
-    #    with patch('builtins.input', side_effect=['Antônio', 'Bruno', 'Carlos', 'Daniel']):
-    #        self.jogo.obter_jogadores(4)
-        
-    #    self.assertEqual(len(self.jogo.jogadores), 4)
+    @patch('builtins.input', side_effect=['Jogador 1', 'Jogador 2'])
+    def test_obter_jogadores_dois_jogadores(self, mock_input):
+        self.jogo.obter_jogadores(2)
+        self.assertEqual(len(self.jogo.jogadores), 2)
+        self.assertEqual(self.jogo.jogadores[0].nome, 'Jogador 1')
+        self.assertEqual(self.jogo.jogadores[1].nome, 'Jogador 2')
 
-    #def test_obter_nome_primeiro_jogador(self):
-    #    with patch('builtins.input', side_effect=['Antônio', 'Bruno', 'Carlos', 'Daniel']):
-    #        self.jogo.obter_jogadores(4)
-        
-    #    self.assertEqual(self.jogo.jogadores[0].nome, 'Antônio')
+    @patch('builtins.input', side_effect=['Jogador 1', 'Jogador 2', 'Jogador 3', 'Jogador 4'])
+    def test_obter_jogadores_quatro_jogadores(self, mock_input):
+        self.jogo.obter_jogadores(4)
+        self.assertEqual(len(self.jogo.jogadores), 4)
+        self.assertEqual(self.jogo.jogadores[0].nome, 'Jogador 1')
+        self.assertEqual(self.jogo.jogadores[1].nome, 'Jogador 2')
+        self.assertEqual(self.jogo.jogadores[2].nome, 'Jogador 3')
+        self.assertEqual(self.jogo.jogadores[3].nome, 'Jogador 4')
 
     def test_calcular_id_time_do_primeiro_jogador(self):
         self.assertEqual(self.jogo.calcular_id_time_do_jogador(1), '1')

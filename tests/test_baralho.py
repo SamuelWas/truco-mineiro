@@ -1,5 +1,7 @@
 import unittest
-from baralho import Baralho
+from baralho import Baralho, Carta
+from carta import Carta
+
 
 class TestCarta(unittest.TestCase):
     def test_baralho_inicia_com_40_cartas(self):
@@ -8,14 +10,37 @@ class TestCarta(unittest.TestCase):
 
     def test_baralho_inicia_sem_cartas_inutilizaveis(self):
         baralho = Baralho()
-        cartas_inutilizaveis = ['8♦','8♠','8♥','8♣','9♦','9♠','9♥','9♣','10♦','10♠','10♥','10♣']
+        cartas_inutilizaveis = ['8♦', '8♠', '8♥', '8♣',
+            '9♦', '9♠', '9♥', '9♣', '10♦', '10♠', '10♥', '10♣']
 
-        for carta_inutilizavel in cartas_inutilizaveis :
+        for carta_inutilizavel in cartas_inutilizaveis:
             self.assertNotIn(carta_inutilizavel, baralho.cartas)
 
     def test_novo_deque_inicia_com_52_cartas(self):
         baralho = Baralho()
         self.assertEqual(len(baralho.novodeque()), 52)
+
+    def test_novo_deque_possui_todas_as_cartas(self):
+        baralho = Baralho()
+        cartas = [
+            'A♦', 'A♠', 'A♥', 'A♣'
+            '2♦', '2♠', '2♥', '2♣'
+            '3♦', '3♠', '3♥', '3♣'
+            '4♦', '4♠', '4♥', '4♣'
+            '4♦', '4♠', '4♥', '4♣'
+            '5♦', '5♠', '5♥', '5♣',
+            '6♦', '6♠', '6♥', '6♣',
+            '7♦', '7♠', '7♥', '7♣',
+            '8♦', '8♠', '8♥', '8♣',
+            '9♦', '9♠', '9♥', '9♣',
+            '10♦', '10♠', '10♥', '10♣',
+            'J♦', 'J♠', 'J♥', 'J♣',
+            'Q♦', 'Q♠', 'Q♥', 'Q♣',
+            'K♦', 'K♠', 'K♥', 'K♣',
+        ]
+
+        for carta in cartas:
+            self.assertNotIn(carta, baralho.novodeque())
 
     def test_embaralhar_altera_ordem_das_cartas(self):
         baralho = Baralho()
@@ -23,6 +48,11 @@ class TestCarta(unittest.TestCase):
         embaralhadas = baralho.embaralhar(baralho.cartas)
         self.assertNotEqual(embaralhadas, nao_embaralhadas)
 
+    def test_embaralhar_sem_cartas(self):
+        baralho = Baralho()
+        with self.assertRaises(Exception):
+            baralho.embaralhar()
+    
     def test_virar_carta_pega_carta_do_topo(self):
         baralho = Baralho()
         carta_topo = baralho.cartas[-1]
