@@ -51,13 +51,23 @@ class Jogo():
     def _resetar_estado_jogo(self):
         for jogador in self.jogadores:
             jogador.limpar_mao()
+
+    def _imprimir_pilha(self):
+        print("Pilha de cartas:")
+        print(','.join(map(str, self.pilha_de_cartas)))
     
     def _receber_input_jogada(self):
-        print("Qual jogada deseja realizar? A - Aumentar a aposta, J - jogar uma carta:  ")
+        print("Qual jogada deseja realizar?")
+        print("(A) - Aumentar a aposta")
+        print("(J) - Jogar uma carta:  ")
         return str(input()).upper()
     
     def _receber_input_aposta(self):
-        print('Digite D para dobrar a aposta, C para correr, ou A para aceitar: ')
+        print("Digite D para dobrar a aposta, C para correr, ou A para aceitar:")
+        print("(D) dobrar a aposta")
+        print("(C) correr")
+        print("(A) aceitar")
+
         return str(input()).upper()
     
     def _distribuir_cartas_para_jogadores(self):
@@ -84,6 +94,7 @@ class Jogo():
         self.limpar_pilha_cartas()
         vencedor_partidas = []
         vencedor_rodada = self.nova_rodada()
+        self.limpar_pilha_cartas()
 
         if self.terminar_rodada:
             return vencedor_rodada
@@ -114,20 +125,23 @@ class Jogo():
             
             #Caso empate novamente
             else:
+                self.limpar_pilha_cartas()
                 vencedor_nova_rodada_empatada = self.nova_rodada()
                 return vencedor_nova_rodada_empatada
                 
 
     def nova_rodada(self):
         for idx, jogador in enumerate(self.jogadores):
+            self._imprimir_pilha()
             jogador.mostrar_mao()
             play = self._receber_input_jogada()
+            self._limpar_cmd()
             
             if play == 'J':
                 carta = jogador.realizar_jogada()
+                self._limpar_cmd()
                 self.adicionar_jogada_a_pilha(carta, jogador.id_jogador)
             else:
-                self._limpar_cmd()
                 print(f'{jogador.nome} Aumentou a aposta, deseja aceitar, correr ou aumentar a aposta novamente?')
                 aceitou = self._receber_input_aposta()
                 
