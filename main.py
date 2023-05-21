@@ -176,55 +176,55 @@ class Jogo():
 
 def main():
 
-    # dict_pontos_cartas = obter_ordem_truco_mineiro()
-    # jogadores = obter_jogadores()
+    dict_pontos_cartas = obter_ordem_truco_mineiro()
+    jogadores = obter_jogadores()
 
-    # while True:
-    #     baralho = Baralho()
-    #     baralho.remover_cartas_inutilizaveis()
+    while True:
+        baralho = Baralho()
+        baralho.remover_cartas_inutilizaveis()
 
-    #     tabela_pontuacao = TabelaDePontos()
+        tabela_pontuacao = TabelaDePontos()
 
-    #     for jogador in jogadores:
-    #         mao = list()
-    #         for i in range(3):
-    #             mao.append(baralho.virar())
-    #         jogador.receber_cartas(mao)
+        for jogador in jogadores:
+            mao = list()
+            for i in range(3):
+                mao.append(baralho.virar())
+            jogador.receber_cartas(mao)
 
-    #     rodadas = 3
-    #     while rodadas > 0:        
-    #         pontos_da_mao = {}
-    #         pontos_da_mao['1'] = 0
-    #         pontos_da_mao['2'] = 0
+        rodadas = 3
+        while rodadas > 0:        
+            pontos_da_mao = {}
+            pontos_da_mao['1'] = 0
+            pontos_da_mao['2'] = 0
 
-    #         pilha_de_cartas = list()    
-    #         for jogador in jogadores:
-    #             carta = jogador.realizar_jogada()
-    #             limpar_cmd()
-    #             # print(carta) DEBUG
-    #             pilha_de_cartas.append((carta, jogador.id_jogador))       
+            pilha_de_cartas = list()    
+            for jogador in jogadores:
+                carta = jogador.realizar_jogada()
+                limpar_cmd()
+                # print(carta) DEBUG
+                pilha_de_cartas.append((carta, jogador.id_jogador))       
 
-    #         maior_carta, vencedor_da_rodada = calcular_vencedor(pilha_de_cartas, dict_pontos_cartas)
-    #         if vencedor_da_rodada == 0:
-    #             print("Empate!")
-    #         else:
-    #             print("Maior carta da pilha: " + str(maior_carta) +  " do jogador " + str(vencedor_da_rodada))
+            maior_carta, vencedor_da_rodada = calcular_vencedor(pilha_de_cartas, dict_pontos_cartas)
+            if vencedor_da_rodada == 0:
+                print("Empate!")
+            else:
+                print("Maior carta da pilha: " + str(maior_carta) +  " do jogador " + str(vencedor_da_rodada))
             
-    #         jogadores = rodar_vez(jogadores, vencedor_da_rodada)
+            jogadores = rodar_vez(jogadores, vencedor_da_rodada)
 
-    #         time_vencedor = calcular_id_time_do_jogador(vencedor_da_rodada)
-    #         pontos_da_mao[time_vencedor]
-    #         if pontos_da_mao[time_vencedor] == 2:
-    #             vencedor_mao = pontos_da_mao.get_vencedor()
-    #             break
-    #         rodadas = rodadas - 1
+            time_vencedor = calcular_id_time_do_jogador(vencedor_da_rodada)
+            pontos_da_mao[time_vencedor]
+            if pontos_da_mao[time_vencedor] == 2:
+                vencedor_mao = pontos_da_mao.get_vencedor()
+                break
+            rodadas = rodadas - 1
         
-    #     tabela_pontuacao.pontuar(vencedor_mao)
-    #     if tabela_pontuacao.is_termino():
-    #         print("Os jogadores X e Y ganharam!")
-    #         break
+        tabela_pontuacao.pontuar(vencedor_mao)
+        if tabela_pontuacao.is_termino():
+            print("Os jogadores X e Y ganharam!")
+            break
 
-    #     baralho.embaralhar()
+        baralho.embaralhar()
 
 
 if __name__ == '__main__':
