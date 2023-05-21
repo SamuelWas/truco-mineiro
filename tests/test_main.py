@@ -1,11 +1,12 @@
 import unittest
 import main
 from jogador import Jogador
+from main import Jogo
 
-
-class MainTest(unittest.TestCase):
+class TestJogo(unittest.TestCase):
+    
     def test_rodar_vez_rotacao_4_jogadores(self):
-        jogadores = [
+        truco.jogadores = [
             Jogador("John", 1, 2),
             Jogador("Alice", 2, 2),
             Jogador("Bob", 3, 1),
