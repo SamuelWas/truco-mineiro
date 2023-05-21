@@ -2,78 +2,100 @@ from jogador import Jogador
 from baralho import Baralho
 from tabela_de_pontos import TabelaDePontos
 from constantes import manilhas, valores, naipes
+import os
+import platform
 
-def calcular_id_time_do_jogador(id_jogador):
-    return str(2 - (id_jogador % 2))
-
-def obter_jogadores():
-    print("Digite o número de jogadores (2 ou 4): ")
-    numero_jogadores = int(input())
-    while numero_jogadores not in [2, 4]:
-        print("O número de jogadores deve ser 2 ou 4! Digite novamente: ")
-        numero_jogadores = int(input())
-
-    lista_de_jogadores = list()
-    for i in range(1, numero_jogadores + 1):
-        id_time = calcular_id_time_do_jogador(i)
-        print("Escolha o nome do jogador "+str(i)+" (time "+str(id_time)+"): ")
-        nome_do_jogador = input()
-        lista_de_jogadores.append(Jogador(nome_do_jogador, i, id_time))
-    return lista_de_jogadores
-
-def calcular_vencedor(pilha_de_cartas, dict_pontos_cartas):
-    maior_valor = 0
-    vencedores = []
-    for carta, id_jogador in pilha_de_cartas:
-        valor_carta = dict_pontos_cartas[str(carta)]
-        if valor_carta > maior_valor:
-            vencedores = []
-            maior_valor = valor_carta
-            vencedores.append((carta, id_jogador))
-        elif valor_carta == maior_valor:
-            vencedores.append((carta, id_jogador))
-    
-    if len(vencedores) == 1:
-        return vencedores.pop()
-    
-    time_vencedor = calcular_id_time_do_jogador(vencedores[0][1])
-    for carta,id_jogador in vencedores:
-        if time_vencedor != calcular_id_time_do_jogador(id_jogador):
-            return ('-' ,0)
+class Jogo():
+    def __init__(self, num_jogadores):
         
-    return vencedores.pop()
+        self.numero_jogadores = num_jogadores
+        self.jogadores = self.obter_jogadores(num_jogadores)
+        self.vencedor_da_rodada = 0
+        self.baralho = Baralho()
+        self.tabela_pontos = TabelaDePontos()
+        self.pilha_de_cartas = []
+        self.dict_pontos_cartas = self.obter_ordem_truco_mineiro()
+
+
+    def _limpar_cmd():
+        sistema_operacional = platform.system()
+
+        if sistema_operacional == 'Windows':
+            os.system('cls')
+        else:
+            os.system('clear')
     
+    def obter_jogadores(self, numero_jogadores):
+        lista_de_jogadores = list()
+        for id in range(1, numero_jogadores + 1):
+            id_time = self.calcular_id_time_do_jogador(id)
+            print("Escolha o nome do jogador "+str(id)+" (time "+str(id_time)+"): ")
+            nome_do_jogador = input()
+            lista_de_jogadores.append(Jogador(nome_do_jogador, id, id_time))
+        return lista_de_jogadores
+    
+    def calcular_id_time_do_jogador(self , id_jogador):
+        return str(2 - (id_jogador % 2))
+    
+    def obter_ordem_truco_mineiro(self):
+        score = 1
+        dict_pontos_cartas = {}
+        for valor in valores:
+            for naipe in naipes:
+                carta = valor + naipe
+                if carta not in manilhas: 
+                    dict_pontos_cartas[carta] = score
+            score += 1
 
-def rodar_vez(jogadores, vencedor_da_rodada):
-    i = 0
-    eixo_de_rotacao = 0
-    for jogador in jogadores:
-        if jogador.id_jogador == vencedor_da_rodada:
-            eixo_de_rotacao = i
-        i += 1
+        for manilha in manilhas:
+            dict_pontos_cartas[manilha] = score
+            score += 1
+        return dict_pontos_cartas 
+    
+    def set_vencedor_rodada(self, id_jogador):
+        self.vencedor_da_rodada = id_jogador
 
-    jogadores = jogadores[eixo_de_rotacao:] + jogadores[:eixo_de_rotacao]
+    def limpar_pilha_cartas(self):
+        self.pilha_de_cartas = self.pilha_de_cartas.clear()
+
+    def adicionar_jogada_a_pilha(self, carta, jogador_id):
+        self.pilha_de_cartas.append((carta, jogador_id))
+
+    def rodar_vez(self):
+        idx = 0
+        eixo_de_rotacao = 0
+        for jogador in self.jogadores:
+            if jogador.id_jogador == self.vencedor_da_rodada:
+                eixo_de_rotacao = idx
+            idx += 1
+        self.jogadores = self.jogadores[eixo_de_rotacao:] + self.jogadores[:eixo_de_rotacao]
+
+    def calcular_vencedor(self):
+        maior_valor = 0
+        vencedores = []
+        for carta, id_jogador in self.pilha_de_cartas:
+            valor_carta = self.dict_pontos_cartas[str(carta)]
+            if valor_carta > maior_valor:
+                vencedores = []
+                maior_valor = valor_carta
+                vencedores.append((carta, id_jogador))
+            elif valor_carta == maior_valor:
+                vencedores.append((carta, id_jogador))
+        
+        if len(vencedores) == 1:
+            return vencedores.pop()
+        
+        time_vencedor = self.calcular_id_time_do_jogador(vencedores[0][1])
+        for carta,id_jogador in vencedores:
+            if time_vencedor != self.calcular_id_time_do_jogador(id_jogador):
+                return ('-' ,0)
             
-    return jogadores
+        return vencedores.pop()
 
-def obter_ordem_truco_mineiro():
-    
-    score = 1
-    dict_pontos_cartas = {}
-    for valor in valores:
-        for naipe in naipes:
-            carta = valor + naipe
-            if carta not in manilhas: 
-                dict_pontos_cartas[carta] = score
-        score += 1
 
-    for manilha in manilhas:
-        dict_pontos_cartas[manilha] = score
-        score += 1
-
-    return dict_pontos_cartas
 
 def main():
+
     dict_pontos_cartas = obter_ordem_truco_mineiro()
     jogadores = obter_jogadores()
 
@@ -98,6 +120,7 @@ def main():
             pilha_de_cartas = list()    
             for jogador in jogadores:
                 carta = jogador.realizar_jogada()
+                limpar_cmd()
                 # print(carta) DEBUG
                 pilha_de_cartas.append((carta, jogador.id_jogador))       
 
