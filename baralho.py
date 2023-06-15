@@ -19,15 +19,20 @@ class Baralho:
         return self.embaralhar(cartas)
 
     def remover_cartas_inutilizaveis(self):
-        self.cartas = [
-            carta for carta in self.cartas if carta.valor not in ['8', '9', '10']]
+        self.cartas = [carta for carta in self.cartas if carta.valor not in ['8', '9', '10']]
 
     def embaralhar(self, cartas):
         if (not cartas):
             raise Exception("Baralho vazio")
         random.shuffle(cartas)
         return cartas
-
+    
+    def novo_deque_nao_embaralhado(self):
+        self.cartas.clear()
+        cartas = [Carta(v, n) for v in list(carta_valores) for n in list(carta_naipes)]
+        self.cartas = cartas
+        self.remover_cartas_inutilizaveis()
+    
     def virar(self):
         """ Retira a carta do topo e remove do baralho. """
         if (len(self.cartas)) == 0:
