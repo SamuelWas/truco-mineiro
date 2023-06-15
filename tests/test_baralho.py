@@ -71,3 +71,10 @@ class TestCarta(unittest.TestCase):
             baralho.virar()
         with self.assertRaises(Exception):
             baralho.virar()
+    
+    def teste_quantidade_de_cartas_no_baralho_nao_embaralhado(self):
+        
+        baralho = Baralho()
+        baralho.novo_deque_nao_embaralhado()
+        
+        assert len(baralho.cartas) == 40

@@ -24,6 +24,7 @@ class Baralho:
     def embaralhar(self, cartas):
         if (not cartas):
             raise Exception("Baralho vazio")
+        
         random.shuffle(cartas)
         return cartas
     
