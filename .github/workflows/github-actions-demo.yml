@@ -27,17 +27,22 @@ jobs:
       - name: Generate coverage HTML report
         run: coverage html
 
+#       - name: Upload coverage report
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: coverage-report
+#           path: ./htmlcov
+          
       - name: Upload coverage report
-        uses: actions/upload-artifact@v2
+      - uses: actions/checkout@master
+      - uses: codecov/codecov-action@v3
         with:
-          name: coverage-report
-          path: ./htmlcov
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-results
-          path: ./test-results
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./htmlcov # optional
+          flags: unittests # optional
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
 
       - name: Extract coverage percentage
         id: coverage
