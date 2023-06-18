@@ -26,9 +26,9 @@ jobs:
 
       - name: Generate coverage HTML report
         run: coverage html
-        
+
       - name: Upload coverage report
-      - uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./htmlcov # optional
