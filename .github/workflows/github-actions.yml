@@ -42,6 +42,7 @@ jobs:
         run: echo "COVERAGE_PERCENTAGE=${{ env.COVERAGE_PERCENTAGE }}"
 
       - name: Replace coverage badge
+        continue-on-error: true
         run: |
           awk '{gsub(/!\[Coverage\][^)]*\)/, "![Coverage](https://img.shields.io/badge/coverage-${{ env.COVERAGE_PERCENTAGE }}%25-green)")}1' README.md > README_TEMP.md
           mv README_TEMP.md README.md
