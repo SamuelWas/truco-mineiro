@@ -10,9 +10,7 @@ warnings.filterwarnings("ignore")
 def path():
     current_dir = os.path.abspath(os.path.dirname(__file__))
 
-    parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
-
-    path_main = os.path.join(parent_dir, "main.py")
+    path_main = os.path.join(current_dir, "main.py")
     
     return path_main
 
