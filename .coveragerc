@@ -2,3 +2,5 @@
 branch = True
 source = ./
 omit = ./tests/*.py
+       ./test_integracao.py
+       ./test_sistema.py
