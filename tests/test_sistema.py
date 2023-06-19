@@ -10,8 +10,10 @@ warnings.filterwarnings("ignore")
 def path():
     current_dir = os.path.abspath(os.path.dirname(__file__))
 
-    path_main = os.path.join(current_dir, "main.py")
-    
+    parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
+
+    path_main = os.path.join(parent_dir, "main.py")
+
     return path_main
 
 @pytest.mark.cmd
