@@ -105,6 +105,7 @@ class Jogo():
             #Se não empatou, comece uma nova rodada.
             vencedor_partidas.append(vencedor_rodada)
             vencedor_nova_rodada = self.nova_rodada()
+            self.limpar_pilha_cartas()
             
             #Caso a nova rodada empatar, vence quem ganhou a primeira
             if vencedor_nova_rodada == 0:
@@ -116,19 +117,21 @@ class Jogo():
             #Caso não empatar, joguemos a terceira rodada. Como cada um ganhou uma rodada, ganha quem ganhar a terceira
             else:
                 vencedor_terceira_rodada = self.nova_rodada()
+                self.limpar_pilha_cartas()
                 return vencedor_terceira_rodada
         
         
         #Caso tenha empatado
         else:
             vencedor_rodada_empatada = self.nova_rodada()
+            self.limpar_pilha_cartas()
             if vencedor_rodada_empatada != 0:
                 return vencedor_rodada_empatada
             
             #Caso empate novamente
             else:
-                self.limpar_pilha_cartas()
                 vencedor_nova_rodada_empatada = self.nova_rodada()
+                self.limpar_pilha_cartas()
                 return vencedor_nova_rodada_empatada
                 
 
