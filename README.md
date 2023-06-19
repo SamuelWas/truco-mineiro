@@ -12,4 +12,4 @@ Integrantes:
 - Rodrigo Felipe Lima Braz
 - Heitor de Paula Santos Damasceno
 
-O programa foi desenvolvido em Python e utiliza a biblioteca padrão do Python para manipulação de listas, dicionários e outras estruturas de dados. Além disso, utilizamos a biblioteca unittest para implementar os testes de unidade e coverage.py para medir a cobertura dos testes.
+O programa foi desenvolvido em Python e utiliza a biblioteca padrão do Python para manipulação de listas, dicionários e outras estruturas de dados. Além disso, utilizamos a biblioteca unittest para implementar os testes de unidade, pytest para os testes de integração e sistema e coverage.py para medir a cobertura dos testes.
